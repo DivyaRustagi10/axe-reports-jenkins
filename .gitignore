@@ -1,3 +1,7 @@
+# files
+a11y-results/
+node_modules/
+
 # Logs
 logs
 *.log
