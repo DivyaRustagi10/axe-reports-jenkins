@@ -37,7 +37,7 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
     reporter.logTestResult('rtl-component', results)
     // console.log(results.violations)
     // Push results to axe Reports
-    await pushJsonToAxeReports(results)
+    //await pushJsonToAxeReports(results)
 
     assert.equal(results.violations.length, 0) 
     
