@@ -7,17 +7,6 @@ pipeline {
     }
 
     stages {
-        stage('Setup') {
-            steps {
-                script {
-                    // Navigate to the correct directory and clean up any previous results
-                    dir('axe-reports-jenkins') {
-                        sh 'rimraf ./a11y-results'
-                    }
-                }
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
                 script {
