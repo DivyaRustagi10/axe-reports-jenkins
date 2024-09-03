@@ -6,7 +6,7 @@ pipeline {
     }
 
     tools {
-        nodejs 'NodeJS 14' // Replace with the name of your NodeJS installation
+        nodejs 'NodeJS'
     }
 
     stages {
