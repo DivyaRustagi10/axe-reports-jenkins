@@ -42,14 +42,6 @@ pipeline {
     }
 
     post {
-        always {
-            script {
-                // Navigate to the correct directory and clean up the results directory
-                dir('axe-reports-jenkins') {
-                    sh 'rimraf ./a11y-results'
-                }
-            }
-        }
         success {
             echo 'Pipeline completed successfully!'
         }
