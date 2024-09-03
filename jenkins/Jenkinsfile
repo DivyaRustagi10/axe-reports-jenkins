@@ -61,7 +61,7 @@ pipeline {
                 }
             }
         }
-        success {ß
+        success {
             echo 'Pipeline completed successfully!'
         }
         failure {
