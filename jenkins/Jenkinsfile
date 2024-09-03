@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         // Define any environment variables here
-        AXE_REPORTER_API_KEY = credentials('axe-reporter-api-key') // Assuming you have stored the API key in Jenkins credentials
+        AXE_REPORTER_API_KEY = credentials('AXE_REPORTER_API_KEY') // Assuming you have stored the API key in Jenkins credentials
     }
 
     stages {
