@@ -45,6 +45,8 @@ pipeline {
                         ls -la ./a11y-results
                     else
                         echo "a11y-results directory does not exist"
+                        echo "Current directory contents:"
+                        ls -la
                     fi
                     '''
                 }
