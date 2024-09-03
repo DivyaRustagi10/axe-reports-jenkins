@@ -35,7 +35,7 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
     const { container } = render(<App />)
     const results = await axeDevtools.run(container)
     reporter.logTestResult('rtl-component', results)
-    // console.log(results.violations)
+    console.log(results.violations)
     // Push results to axe Reports
     //await pushJsonToAxeReports(results)
 
