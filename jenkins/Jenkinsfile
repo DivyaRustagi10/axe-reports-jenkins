@@ -36,28 +36,21 @@ pipeline {
     post {
         always {
             script {
-                // Wait for the a11y-results directory to be created
+                // Debugging: Check if the a11y-results directory is created
                 dir('axe-reports-jenkins') {
                     sh '''
-                    COUNTER=0
-                    while [ ! -d "./a11y-results" ] && [ $COUNTER -lt 30 ]; do
-                        echo "Waiting for a11y-results directory to be created..."
-                        sleep 1
-                        COUNTER=$((COUNTER+1))
-                    done
-                    if [ ! -d "./a11y-results" ]; then
-                        echo "a11y-results directory not found after waiting"
-                        exit 1
+                    echo "Checking if a11y-results directory exists..."
+                    if [ -d "./a11y-results" ]; then
+                        echo "a11y-results directory exists"
+                        ls -la ./a11y-results
+                    else
+                        echo "a11y-results directory does not exist"
                     fi
                     '''
                 }
-                // List the contents of the a11y-results directory
-                dir('axe-reports-jenkins') {
-                    sh 'ls -la ./a11y-results/ || echo "No results found"'
-                }
                 // Archive the a11y results
                 dir('axe-reports-jenkins') {
-                    archiveArtifacts artifacts: './a11y-results/**/*', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'a11y-results/**/*', allowEmptyArchive: true
                 }
             }
         }
