@@ -1,9 +1,9 @@
-import React from 'react'
-import { render, cleanup } from '@testing-library/react'
-import assert from 'assert'
-import axeDevtools from '@axe-devtools/browser'
-import Reporter from '@axe-devtools/reporter'
-import rimraf from 'rimraf'
+import { render, cleanup } from '@testing-library/react';
+import assert from 'assert';
+import axeDevtools from '@axe-devtools/browser';
+import { Reporter } from '@axe-devtools/reporter'; // Ensure correct import
+import rimraf from 'rimraf';
+import { act } from 'react';
 
 const App = () => (
   <div>
