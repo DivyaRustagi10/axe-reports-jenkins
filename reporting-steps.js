@@ -1,17 +1,9 @@
 const exec = require('child_process').exec;
 const rimraf = require('rimraf');
-const Reporter = require('@axe-devtools/reporter');
 
 const reportsDash_json_path = './a11y-results';
 
 module.exports = {
-  createReports: async function() {
-    const reporter = new Reporter('A11yResults', reportsDash_json_path);
-    await reporter.buildHTML(`${reportsDash_json_path}/html/`);
-    await reporter.buildJUnitXML(`${reportsDash_json_path}/xml/`);
-    await reporter.buildCSV(`${reportsDash_json_path}/csv/`);
-  },
-  
   pushJsonToAxeReports: async function(url) {
     let api_test_key = process.env.AXE_REPORTER_API_KEY;
     let dimensions = "ProductA,App,MainComponent";
