@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+
+    environment {
+        // Define any environment variables here
+        AXE_REPORTER_API_KEY = credentials('axe-reporter-api-key') // Assuming you have stored the API key in Jenkins credentials
+    }
+
+    stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Navigate to the correct directory and clean up any previous results
+                    dir('axe-reports-jenkins') {
+                        sh 'rimraf ./a11y-results'
+                    }
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install project dependencies
+                    dir('axe-reports-jenkins') {
+                        sh 'npm install'
+                    }
+                }
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                script {
+                    // Navigate to the correct directory and run the tests
+                    dir('axe-reports-jenkins') {
+                        sh 'npm test'
+                    }
+                }
+            }
+        }
+
+        stage('Archive Results') {
+            steps {
+                script {
+                    // Navigate to the correct directory and archive the a11y results
+                    dir('axe-reports-jenkins') {
+                        archiveArtifacts artifacts: 'a11y-results/**/*', allowEmptyArchive: true
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                // Navigate to the correct directory and clean up the results directory
+                dir('axe-reports-jenkins') {
+                    sh 'rimraf ./a11y-results'
+                }
+            }
+        }
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+    }
+}
