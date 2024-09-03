@@ -31,20 +31,17 @@ pipeline {
                 }
             }
         }
-
-        stage('Archive Results') {
-            steps {
-                script {
-                    // Navigate to the correct directory and archive the a11y results
-                    dir('axe-reports-jenkins') {
-                        archiveArtifacts artifacts: 'a11y-results/**/*', allowEmptyArchive: true
-                    }
-                }
-            }
-        }
     }
 
     post {
+        always {
+            script {
+                // Navigate to the correct directory and archive the a11y results
+                dir('axe-reports-jenkins') {
+                    archiveArtifacts artifacts: 'a11y-results/**/*', allowEmptyArchive: true
+                }
+            }
+        }
         success {
             echo 'Pipeline completed successfully!'
         }
