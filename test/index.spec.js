@@ -58,7 +58,7 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
     }
 
     // Call pushJsonToAxeReports function
-    await pushJsonToAxeReports(results);
+    // await pushJsonToAxeReports(results);
 
     assert.equal(results.violations.length, 0);
   });
