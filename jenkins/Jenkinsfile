@@ -35,11 +35,12 @@ pipeline {
 
     post {
         always {
-            steps {
-                sh 'npm run axe -- ./a11y-results --axe-reports-api-key $AXE_REPORTER_API_KEY --send-axe-reports --axe-reports-dimensions=ProductA,App,MainComponent'
-            }
-
             script {
+                // Run the axe CLI
+                dir('axe-reports-jenkins') {
+                    sh 'npm run axe -- ./a11y-results --axe-reports-api-key $AXE_REPORTER_API_KEY --send-axe-reports --axe-reports-dimensions=ProductA,App,MainComponent'
+                }
+
                 // Debugging: Check if the a11y-results directory is created
                 dir('axe-reports-jenkins') {
                     sh '''
@@ -54,6 +55,7 @@ pipeline {
                     fi
                     '''
                 }
+
                 // Archive the a11y results
                 dir('axe-reports-jenkins') {
                     archiveArtifacts artifacts: 'a11y-results/**/*', allowEmptyArchive: true
