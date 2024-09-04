@@ -7,6 +7,7 @@ import rimraf from 'rimraf';
 import fs from 'fs';
 import path from 'path';
 import { pushJsonToAxeReports, deleteTempaxeDashReportsDir } from '../reporting-steps';
+import { execSync } from 'child_process';
 
 const App = () => (
   <div>
@@ -23,6 +24,10 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
   beforeEach(() => {
     rimraf.sync('./a11y-results*');
     reporter = new Reporter('A11yResults', './a11y-results');
+    // Ensure the directory is created
+    if (!fs.existsSync('./a11y-results')) {
+      fs.mkdirSync('./a11y-results');
+    }
   });
 
   afterEach(async () => {
