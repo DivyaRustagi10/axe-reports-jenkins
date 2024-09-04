@@ -56,7 +56,7 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
     assert.equal(results.violations.length, 0);
   });
 
-  afterAll(async () => {
-    await deleteTempaxeDashReportsDir();
-  });
+  // afterAll(async () => {
+  //   await deleteTempaxeDashReportsDir();
+  // });
 });
