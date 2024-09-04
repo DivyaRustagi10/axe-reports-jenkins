@@ -42,6 +42,8 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
 
     // Debugging: Check if the a11y-results directory is created
     const resultsDir = path.resolve('./a11y-results/');
+    console.log('Current working directory:', process.cwd());
+    console.log('Checking if a11y-results directory exists:', resultsDir);
     if (fs.existsSync(resultsDir)) {
       console.log('a11y-results directory exists');
       const files = fs.readdirSync(resultsDir);
