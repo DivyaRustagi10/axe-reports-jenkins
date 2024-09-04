@@ -36,9 +36,16 @@ pipeline {
     post {
         always {
             script {
-                // Run the axe CLI
+                // Define the necessary variables
+                def reportsDashJsonPath = './a11y-results'
+                def dimensions = 'ProductA,App,MainComponent'
+
+                // Run the axe CLI with the correct command
                 dir('axe-reports-jenkins') {
-                    sh 'npm run axe -- ./a11y-results --axe-reports-api-key $AXE_REPORTER_API_KEY --send-axe-reports --axe-reports-dimensions=ProductA,App,MainComponent'
+                    sh """
+                    axe bulk-reports ${reportsDashJsonPath} --axe-reports-api-key ${AXE_REPORTER_API_KEY} --send-axe-reports --axe-reports-dimensions=${dimensions}
+                    echo "Uploaded Reports to Axe Reports Dashboard"
+                    """
                 }
 
                 // Debugging: Check if the a11y-results directory is created
