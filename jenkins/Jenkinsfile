@@ -13,7 +13,6 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    // Navigate to the correct directory and install project dependencies
                     dir('axe-reports-jenkins') {
                         sh 'npm install'
                     }
@@ -24,7 +23,6 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    // Navigate to the correct directory and run the tests
                     dir('axe-reports-jenkins') {
                         sh 'npm test'
                     }
@@ -36,14 +34,12 @@ pipeline {
     post {
         always {
             script {
-                // Define the necessary variables
                 def reportsDashJsonPath = './a11y-results'
                 def dimensions = 'ProductA,App,MainComponent'
 
-                // Run the axe CLI with the correct command
                 dir('axe-reports-jenkins') {
                     sh """
-                    axe bulk-reports ${reportsDashJsonPath} --axe-reports-api-key ${AXE_REPORTER_API_KEY} --send-axe-reports --axe-reports-dimensions=${dimensions}
+                    npm run axe -- bulk-reports ${reportsDashJsonPath} --axe-reports-api-key ${AXE_REPORTER_API_KEY} --send-axe-reports --axe-reports-dimensions=${dimensions}
                     echo "Uploaded Reports to Axe Reports Dashboard"
                     """
                 }
