@@ -31,15 +31,16 @@ pipeline {
                 }
             }
         }
-         stage('Run Axe CLI') {
-               steps {
-                   sh 'npm run axe -- ./a11y-results --axe-reports-api-key $AXE_REPORTER_API_KEY --send-axe-reports --axe-reports-dimensions=ProductA,App,MainComponent'
-               }
-           }
     }
 
     post {
         always {
+            stage('Run Axe CLI') {
+                steps {
+                    sh 'npm run axe -- ./a11y-results --axe-reports-api-key $AXE_REPORTER_API_KEY --send-axe-reports --axe-reports-dimensions=ProductA,App,MainComponent'
+                }
+            }
+            
             script {
                 // Debugging: Check if the a11y-results directory is created
                 dir('axe-reports-jenkins') {
