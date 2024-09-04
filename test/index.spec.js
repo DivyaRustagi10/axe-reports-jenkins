@@ -1,12 +1,12 @@
-import React from 'react'
-import { render, cleanup } from '@testing-library/react'
-import assert from 'assert'
-import axeDevtools from '@axe-devtools/browser'
-import Reporter from '@axe-devtools/reporter'
-import rimraf from 'rimraf'
+import React from 'react';
+import { render, cleanup, act } from '@testing-library/react';
+import assert from 'assert';
+import axeDevtools from '@axe-devtools/browser';
+import Reporter from '@axe-devtools/reporter';
+import rimraf from 'rimraf';
 import fs from 'fs';
 import path from 'path';
-
+import { pushJsonToAxeReports, deleteTempaxeDashReportsDir } from '../reporting-steps';
 
 const App = () => (
   <div>
@@ -15,29 +15,30 @@ const App = () => (
     <img src="image.jpg" /> 
     <button value="submit"></button>
   </div>
-)
+);
 
 describe('@axe-devtools/browser, jest, @testing-library/react', () => {
-  let reporter
+  let reporter;
 
   beforeEach(() => {
-    rimraf.sync('./a11y-results*')
-    reporter = new Reporter('A11yResults', './a11y-results')
-  })
+    rimraf.sync('./a11y-results*');
+    reporter = new Reporter('A11yResults', './a11y-results');
+  });
 
-  afterEach(() => {
-    reporter.buildHTML('./a11y-results')
-    reporter.buildCSV('./a11y-results')
-    reporter.buildJUnitXML('./a11y-results')
-    cleanup()
-  })
+  afterEach(async () => {
+    await reporter.buildHTML('./a11y-results');
+    await reporter.buildCSV('./a11y-results');
+    await reporter.buildJUnitXML('./a11y-results');
+    cleanup();
+  });
 
   it('should test @testing-library/react component', async () => {
-    // @testing-library/react automatically appends the container to the DOM
-    const { container } = render(<App />)
-    const results = await axeDevtools.run(container)
-    reporter.logTestResult('rtl-component', results)
-
+    let container;
+    await act(async () => {
+      container = render(<App />).container;
+    });
+    const results = await axeDevtools.run(container);
+    reporter.logTestResult('rtl-component', results);
 
     // Debugging: Check if the a11y-results directory is created
     const resultsDir = path.resolve('./a11y-results/');
@@ -49,6 +50,13 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
       console.log('a11y-results directory does not exist');
     }
 
-    assert.equal(results.violations.length, 0)
+    // Call pushJsonToAxeReports function
+    await pushJsonToAxeReports(results);
+
+    assert.equal(results.violations.length, 0);
+  });
+
+  afterAll(async () => {
+    await deleteTempaxeDashReportsDir();
   });
 });
