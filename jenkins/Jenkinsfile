@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         AXE_REPORTER_API_KEY = credentials('AXE_REPORTER_API_KEY') // Assuming you have stored the API key in Jenkins credentials
+        PATH = "/usr/local/bin:$PATH" // Ensure Homebrew binaries are in the PATH
     }
 
     tools {
@@ -10,7 +11,15 @@ pipeline {
     }
 
     stages {
-        stage('Install Dependencies') {
+        stage('Install System Dependencies') {
+            steps {
+                sh '''
+                brew install pkg-config cairo pango libpng jpeg giflib librsvg || true
+                '''
+            }
+        }
+
+        stage('Install Node Modules') {
             steps {
                 script {
                     // Navigate to the correct directory and install project dependencies
