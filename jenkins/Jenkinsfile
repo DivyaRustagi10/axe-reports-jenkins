@@ -39,10 +39,10 @@ pipeline {
 
                 withCredentials([string(credentialsId: 'AXE_REPORTER_API_KEY', variable: 'AXE_REPORTER_API_KEY')]) {
                     dir('axe-reports-jenkins') {
-                        sh """
-                        npm run axe -- bulk-reports ${reportsDashJsonPath} --axe-reports-api-key ${AXE_REPORTER_API_KEY} --send-axe-reports --axe-reports-dimensions=${dimensions}
+                        sh '''
+                        npm run axe -- bulk-reports ${reportsDashJsonPath} --axe-reports-api-key $AXE_REPORTER_API_KEY --send-axe-reports --axe-reports-dimensions=${dimensions}
                         echo "Uploaded Reports to Axe Reports Dashboard"
-                        """
+                        '''
                     }
                 }
             }
