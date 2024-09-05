@@ -20,16 +20,6 @@ pipeline {
             }
         }
 
-        stage('Install ChromeDriver') {
-            steps {
-                script {
-                    // Install ChromeDriver and add it to the PATH
-                    sh 'npm install chromedriver --save-dev'
-                    env.PATH = "${env.WORKSPACE}/node_modules/.bin:${env.PATH}"
-                }
-            }
-        }
-
         stage('Run Tests') {
             steps {
                 script {
@@ -44,9 +34,6 @@ pipeline {
     post {
         always {
             script {
-                def reportsDashJsonPath = './a11y-results'
-                def dimensions = 'ProductA,App,MainComponent'
-
                 withCredentials([string(credentialsId: 'AXE_REPORTER_API_KEY', variable: 'AXE_REPORTER_API_KEY')]) {
                     dir('axe-reports-jenkins') {
                         sh '''
