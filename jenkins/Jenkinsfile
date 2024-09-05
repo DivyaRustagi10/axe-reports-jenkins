@@ -45,26 +45,6 @@ pipeline {
                         """
                     }
                 }
-
-                // Debugging: Check if the a11y-results directory is created
-                dir('axe-reports-jenkins') {
-                    sh '''
-                    echo "Checking if a11y-results directory exists..."
-                    if [ -d "./a11y-results" ]; then
-                        echo "a11y-results directory exists"
-                        ls -la ./a11y-results
-                    else
-                        echo "a11y-results directory does not exist"
-                        echo "Current directory contents:"
-                        ls -la
-                    fi
-                    '''
-                }
-
-                // Archive the a11y results
-                dir('axe-reports-jenkins') {
-                    archiveArtifacts artifacts: 'a11y-results/**/*', allowEmptyArchive: true
-                }
             }
         }
         success {
