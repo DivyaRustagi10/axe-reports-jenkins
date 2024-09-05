@@ -20,6 +20,16 @@ pipeline {
             }
         }
 
+        stage('Ensure ChromeDriver in PATH') {
+            steps {
+                script {
+                    // Ensure ChromeDriver is in the PATH
+                    sh 'which chromedriver || echo "ChromeDriver not found in PATH"'
+                    sh 'echo $PATH'
+                }
+            }
+        }
+
         stage('Run Tests') {
             steps {
                 script {
@@ -40,7 +50,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'AXE_REPORTER_API_KEY', variable: 'AXE_REPORTER_API_KEY')]) {
                     dir('axe-reports-jenkins') {
                         sh '''
-                        npm run axe -- bulk-reports='${reportsDashJsonPath}' --axe-reports-api-key $AXE_REPORTER_API_KEY --send-axe-reports --axe-reports-dimensions='${dimensions} --browser=chrome'
+                        npm run axe -- bulk-reports=${reportsDashJsonPath} --axe-reports-api-key $AXE_REPORTER_API_KEY --send-axe-reports --axe-reports-dimensions=${dimensions} --browser=chrome
                         echo "Uploaded Reports to Axe Reports Dashboard"
                         '''
                     }
