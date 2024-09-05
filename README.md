@@ -77,9 +77,9 @@ This project is integrated with Jenkins to automate the execution of accessibili
 2. Run Tests
 3. Push Results to axe Reports
 
-By integrating these steps into your CI/CD pipeline, you can monitor how UI changes impact accessibility and ensure that your product remains accessible over time. This process provides visibility into how accessibility is changing with each build or deployment, allowing you to better understand the accessibility health of your product.
-
 The Jenkinsfile used for this integration is located in the `jenkins` directory.
+
+By integrating these steps into your CI/CD pipeline, you can monitor how UI changes impact accessibility and ensure that your product remains accessible over time. This process provides visibility into how accessibility is changing with each build or deployment, allowing you to better understand the accessibility health of your product.
 
 ## Additional Documentation
 
