@@ -5,9 +5,6 @@ import axeDevtools from '@axe-devtools/browser';
 import Reporter from '@axe-devtools/reporter';
 import rimraf from 'rimraf';
 import fs from 'fs';
-import path from 'path';
-import { pushJsonToAxeReports, deleteTempaxeDashReportsDir } from '../reporting-steps';
-import { execSync } from 'child_process';
 
 const App = () => (
   <div>
@@ -15,7 +12,6 @@ const App = () => (
     <h1>Hello World</h1>
     <img src="image.jpg" alt="" /> 
     <button value="submit"> Submit</button>
-    <a href="https://github.com/dequelabs"></a>
   </div>
 );
 
@@ -46,25 +42,6 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
     const results = await axeDevtools.run(container);
     reporter.logTestResult('rtl-component', results);
 
-    // Debugging: Check if the a11y-results directory is created
-    const resultsDir = path.resolve('./a11y-results/');
-    console.log('Current working directory:', process.cwd());
-    console.log('Checking if a11y-results directory exists:', resultsDir);
-    if (fs.existsSync(resultsDir)) {
-      console.log('a11y-results directory exists');
-      const files = fs.readdirSync(resultsDir);
-      console.log('Files in a11y-results:', files);
-    } else {
-      console.log('a11y-results directory does not exist');
-    }
-
-    // Call pushJsonToAxeReports function
-    // await pushJsonToAxeReports(results);
-
     assert.equal(results.violations.length, 0);
   });
-
-  // afterAll(async () => {
-  //   await deleteTempaxeDashReportsDir();
-  // });
 });

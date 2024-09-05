@@ -37,11 +37,13 @@ pipeline {
                 def reportsDashJsonPath = './a11y-results'
                 def dimensions = 'ProductA,App,MainComponent'
 
-                dir('axe-reports-jenkins') {
-                    sh """
-                    npm run axe -- bulk-reports ${reportsDashJsonPath} --axe-reports-api-key ${AXE_REPORTER_API_KEY} --send-axe-reports --axe-reports-dimensions=${dimensions}
-                    echo "Uploaded Reports to Axe Reports Dashboard"
-                    """
+                withCredentials([string(credentialsId: 'AXE_REPORTER_API_KEY', variable: 'AXE_REPORTER_API_KEY')]) {
+                    dir('axe-reports-jenkins') {
+                        sh """
+                        npm run axe -- bulk-reports ${reportsDashJsonPath} --axe-reports-api-key ${AXE_REPORTER_API_KEY} --send-axe-reports --axe-reports-dimensions=${dimensions}
+                        echo "Uploaded Reports to Axe Reports Dashboard"
+                        """
+                    }
                 }
 
                 // Debugging: Check if the a11y-results directory is created
