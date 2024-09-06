@@ -4,7 +4,6 @@ import assert from 'assert';
 import axeDevtools from '@axe-devtools/browser';
 import Reporter from '@axe-devtools/reporter';
 import rimraf from 'rimraf';
-import fs from 'fs';
 
 const App = () => (
   <div>
@@ -21,10 +20,6 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
   beforeEach(() => {
     rimraf.sync('./a11y-results*');
     reporter = new Reporter('A11yResults', './a11y-results');
-    // Ensure the directory is created
-    if (!fs.existsSync('./a11y-results')) {
-      fs.mkdirSync('./a11y-results');
-    }
   });
 
   afterEach(async () => {
@@ -41,7 +36,7 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
     });
     const results = await axeDevtools.run(container);
     reporter.logTestResult('rtl-component', results);
-    console.log(results)
+    console.log(results.violations)
 
     assert.equal(results.violations.length, 0);
   });
