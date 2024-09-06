@@ -41,6 +41,7 @@ describe('@axe-devtools/browser, jest, @testing-library/react', () => {
     });
     const results = await axeDevtools.run(container);
     reporter.logTestResult('rtl-component', results);
+    console.log(results)
 
     assert.equal(results.violations.length, 0);
   });
