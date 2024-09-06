@@ -9,8 +9,8 @@ const App = () => (
   <div>
     <h2> This is an example test in jest-RTL </h2>
     <h1>Hello World</h1>
-    <img src="image.jpg" /> 
-    <button value="submit"> Submit</button>
+    <img src="image.jpg" alt=""/> 
+    <button value="submit"></button>
   </div>
 );
 
