@@ -67,7 +67,7 @@ Ensure that axe Reports is configured with the necessary dimensions to receive d
 - [Configuring Scripts and Dimensions](https://docs.deque.com/reports/1.12/en/devtools-howtos)
 - [First Time Data Setup](https://docs.deque.com/reports/1.12/en/configure-scripts#configure-scripts---first-time-data-setup)
 
-The `result-name` in `reporter = new Reporter(<result-name>, <output-directory>)` becomes your axe DevTools script ID in axe Reports. This unique identifier allows you to push new data to specified dimensions.
+The `result-name` in `reporter = new Reporter(<result-name>, <output-directory>)` becomes your axe DevTools script ID in axe Reports. This unique identifier allows you to push new data to a specified script.
 
 ## Jenkins Integration
 
