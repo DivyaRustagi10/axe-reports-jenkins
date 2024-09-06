@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AXE_REPORTER_API_KEY = credentials('AXE_REPORTER_API_KEY') // Assuming you have stored the API key in Jenkins credentials
+        AXE_REPORTER_API_KEY = credentials('AXE_REPORTER_API_KEY')
     }
 
     tools {
