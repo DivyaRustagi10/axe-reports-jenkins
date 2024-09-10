@@ -57,6 +57,7 @@ After running the tests, you can send the results to axe Reports using the follo
 ```sh
 npm run axe -- bulk-reports <results-directory> --axe-reports-api-key <your-axe-reports-api-key> --send-axe-reports --axe-reports-dimensions='<comma-separated-dimensions>'
 ```
+Make sure to include the `--send-to-axe-reports` flag in your CLI command.
 
 You need an API key to push results to axe Reports:
 
